@@ -2,7 +2,7 @@
 // 2019/11/21
 // 概要 概要 スペースの2D化(表示は3D 影付き)
 // pirates は y>=150で活動。かつ creator はy方向の移動は少ないとする
-// copygame_agentのクラスの定義
+// broadcaster_agentのクラスの定義
 // 初期化
 // gb 長さ90000の配列
 //   30 x 30 の配列
@@ -86,15 +86,15 @@ game_cell.prototype.use=function(){
 // 10<x<580, -25<x<25
 // y, vyは0に初期化
 
-function copygame_agent(aid1,gb1,ty1) {
+function broadcaster_agent(aid1,gb1,ty1) {
   this.aid=aid1;
   this.gb = gb1;    // game board
   this.type = ty1;    // agent type = 2
   this.x = Math.random() * 270 + 10;
   this.y = Math.random() * 270 + 10;
   this.z = 0;
-  this.vx = Math.random() * 20 - 10;
-  this.vy = Math.random() * 20 - 10;
+  this.vx = 1;
+  this.vy = 1;
   //if (ty1==1) { // author is in same raw 
   //  this.vy=0;
   //}
@@ -111,65 +111,12 @@ function copygame_agent(aid1,gb1,ty1) {
 //   gb[this.nn].st=1 なら
 // y座標を1, vyを10にする
 
-copygame_agent.prototype.progress = function() {
+broadcaster_agent.prototype.progress = function() {
   this.nn=Math.floor(this.x / 10) + Math.floor(this.y / 10)*30;
   this.iz=Math.floor(this.z);
  // type1 author
- if(this.type==1){
-    // creator type
-    if(this.iz==0 && this.ep>0){
-      // エネルギーが残っており、iy=0の場合
-      var rr=Math.random();
-      if (rr < 0.02){
-        // 2% の確率でエネルギーを減らす
-        this.ep = this.ep - 1;
-      }
-      if (rr < 0.01){
-        // 1%の確率で作品を残す
-        this.gb[this.nn].st = 1;
-        this.gb[this.nn].author=this;
-      }
-    }
-  }
-  // type2 consumer
-  else if(this.type==2) {
-    if (this.iz==0) {
-      if (this.gb[this.nn].st>=1) {
-        var author1;
-        // マーク済の位置にあれば、ジャンプ
-        this.z = 1;
-        this.vz = this.ep; // エネルギー分ジャンプ
-        gb[this.nn].use();
-        // author1 = gb[this.nn].author;
-        // author1.ep = author1.ep + 1;
-        this.ep = this.ep + 1;
-      }
-      else {
-        // マークがなければそのままの位置でマーク
-
-      }
-    }
-  }
-  // type3 pirates
-  else if(this.type==3){
-    // pirate type
-    if (this.y >= 150){
-      if (this.iz==0) {
-        if (this.gb[this.nn].st==1) {
-          this.gb[this.nn].st=2;
-          var author1;
-          // マーク済の位置にあれば、マークを自分に変更
-          gb[this.nn].author = this;
-        }
-        else {
-          // マークがなければそのままの位置でマーク
-  
-        }
-      }
-    }
-  }
 }
-copygame_agent.prototype.move = function() {
+broadcaster_agent.prototype.move = function() {
   // consumer type
   if(this.nn < 0 || this.nn>=90000) {
     console("error, this.nn range")
@@ -200,7 +147,7 @@ copygame_agent.prototype.move = function() {
 }
 
 // show : 表示
-copygame_agent.prototype.show = function() {
+broadcaster_agent.prototype.show = function() {
   // 円を描画
     // y 座標を整数に変換してから描画する    
     var x1,z1;

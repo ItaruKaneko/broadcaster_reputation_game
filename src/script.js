@@ -1,9 +1,9 @@
 // プログラム全体で使用する変数
 var c1;        // ゲームボード描画コンテキスト
 var c2;        // グラフ描画コンテキスト
-var copygame_agents;     // 全 copygame_agent を格納する配列
-var number_of_copygame_agents; // copygame_agent の数
-var number_of_creators; // copygame_agent の数
+var broadcaster_agents;     // 全 broadcaster_agent を格納する配列
+var number_of_broadcaster_agents; // broadcaster_agent の数
+var number_of_creators; // broadcaster_agent の数
 var number_of_pirates; // pirates の数
 var gb;        // game bord, sixze 600
 var tick_count1;      // tick count 1
@@ -19,11 +19,11 @@ function plot_status(){
   ncnt=0; // 全体の生きているエージェントの数
   aena=0; // 著作者のエネルギー
   var n;
-  for (n = 0; n < number_of_copygame_agents; n++) {
-    esum=esum + copygame_agents[n].ep;
-    if (copygame_agents[n].ep > 0 && copygame_agents[n].type==1) {
+  for (n = 0; n < number_of_broadcaster_agents; n++) {
+    esum=esum + broadcaster_agents[n].ep;
+    if (broadcaster_agents[n].ep > 0 && broadcaster_agents[n].type==1) {
       ncnt=ncnt + 1;
-      aena=aena + copygame_agents[n].ep;
+      aena=aena + broadcaster_agents[n].ep;
     }
   }
   c2.beginPath();
@@ -91,46 +91,46 @@ function init_simulation(){
       n1++;
     }
   }
-  // copygame_agent数の設定
-  number_of_copygame_agents = 50;
+  // broadcaster_agent数の設定
+  number_of_broadcaster_agents = 50;
   number_of_pirates = 20;
   number_of_creators = 10;
 
-  // 全copygame_agentを格納する配列の準備
-  copygame_agents = new Array(number_of_copygame_agents);  
-  // 全copygame_agentの初期化
-  for (var n = 0; n < number_of_copygame_agents; n++) {
+  // 全broadcaster_agentを格納する配列の準備
+  broadcaster_agents = new Array(number_of_broadcaster_agents);  
+  // 全broadcaster_agentの初期化
+  for (var n = 0; n < number_of_broadcaster_agents; n++) {
     if(n < number_of_creators) {
-    copygame_agents[n]=new copygame_agent(n,gb,1);
+    broadcaster_agents[n]=new broadcaster_agent(n,gb,1);
     }
     else if (n < number_of_creators + number_of_pirates ) {
-      copygame_agents[n]=new copygame_agent(n,gb,3);
+      broadcaster_agents[n]=new broadcaster_agent(n,gb,3);
     }
     else {
-      copygame_agents[n]=new copygame_agent(n,gb,2);
+      broadcaster_agents[n]=new broadcaster_agent(n,gb,2);
     }
   }
 
 }
 
-// copygame_agent クラスを使ったアニメーションの本体
+// broadcaster_agent クラスを使ったアニメーションの本体
 // 毎秒 30 回実行する関数
 function tick1() {
   tick_count1=tick_count1+1;
   // 描画領域をいったんクリアする
   c1.clearRect(0, 0, 600, 600);
 
-  // 20個の円についてのループ
+  // gb - game_cell を描画する
   var n;
   for (n = 0; n < 900; n++){
     gb[n].show();
   }
-  //game_title();
-  for (n = 0; n < number_of_copygame_agents; n++) {
-    // copygame_agent を移動し、描画する
-    copygame_agents[n].progress();
-    copygame_agents[n].move();
-    copygame_agents[n].show();
+  // copygame agents を動かす
+  for (n = 0; n < number_of_broadcaster_agents; n++) {
+    // broadcaster_agent を移動し、描画する
+    broadcaster_agents[n].progress();
+    broadcaster_agents[n].move();
+    broadcaster_agents[n].show();
   }
   if (tick_count1 > 500) {
     init_simulation()
