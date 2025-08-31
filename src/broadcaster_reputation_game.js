@@ -18,6 +18,25 @@
 //   
 
 
+// spi stimulation preference index  0.0..1.0
+// cpi creditability preference index 0.0..1.0
+// rsi reputation score index
+// epi excitement score index
+// fal following agent list
+
+var nipm = Array.from({ length: 100 }, () => ({
+  ipi: null,
+  cpi: null,
+  rsi: null,
+  epi: null,
+  fal: null
+}));
+
+nipm_initialize=function() {
+  var i;
+  for (let i = 0; i < 20; i++) {
+  }
+}
 
 // class definition : game_cell
 // ゲームのます目の定義
@@ -80,15 +99,14 @@ function nipa(aid1,gb1,ty1) {
   this.aid=aid1;
   this.gb = gb1;    // game board
   this.type = ty1;    // agent type = 2
-  this.x = Math.random() * 270 + 10;
-  this.y = Math.random() * 270 + 10;
+  this.x = Math.random() * 600 + 10;
+  this.y = Math.random() * 600 + 10;
   this.z = 0;
   //if (ty1==1) { // author is in same raw 
   //  this.vy=0;
   //}
   this.ep = 4;  //  energy point = 0
   this.nn=Math.floor(this.y) * 300 + Math.floor(this.x);
-  this.iz=Math.floor(this.z);
 }
 
 
@@ -118,7 +136,7 @@ nipa.prototype.show = function() {
           
     c1.beginPath();
 
-    c1.arc(x1,330 - y1, this.ep, 0, Math.PI * 2);
+    c1.arc(x1,630 - y1, this.ep, 0, Math.PI * 2);
     if(this.type==1){
       c1.fillStyle = 'rgb(0,255,128)'; // creator = 緑
     }else if (this.type == 2){
