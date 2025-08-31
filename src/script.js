@@ -7,7 +7,7 @@ var number_of_broadcasters; // broadcasters の数
 var gb;        // game bord, sixze 600
 var tick_count1;      // tick count 1
 
-var mpa; // messasge propagation agent
+var nipm; // news item propagation matrix
 
 
 // x axis
@@ -92,8 +92,7 @@ function plot_axis(){
 
 // 初期化
 function init_simulation(){
-  c2.clearRect(0, 0, 600, 600);
-  plot_axis()
+  // plot_axis()
   tick_count1=0; // tick count をゼロリセット
   gb = new Array(90000);
   // game bord のクリア
@@ -155,14 +154,15 @@ function draw_canvas() {
   if (!canv1 || !canv1.getContext) {
       return false;
   }
-  var canv2 = document.getElementById('canvas_tag_2');
-  c2 = canv2.getContext('2d');
-  if (!canv2 || !canv2.getContext) {
-      return false;
-  }
+  // var canv2 = document.getElementById('canvas_tag_2');
+  // c2 = canv2.getContext('2d');
+  // if (!canv2 || !canv2.getContext) {
+  //     return false;
+  // }
 
+  // c2.clearRect(0, 0, 600, 600);
   init_simulation()
   // tick1 を毎秒 30 回実行するための設定
-  plot_axis();
+  // plot_axis();
   setInterval(tick1, 100);
 }

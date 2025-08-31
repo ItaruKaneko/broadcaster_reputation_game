@@ -74,9 +74,9 @@ game_cell.prototype.use=function(){
 // (ix,iz)は (x.z)の整数値
 // 初期化により x,vx はランダムに
 // 10<x<580, -25<x<25
-// y, vyは0に初期化
 
 function nipa(aid1,gb1,ty1) {
+  // nipa shape
   this.aid=aid1;
   this.gb = gb1;    // game board
   this.type = ty1;    // agent type = 2
