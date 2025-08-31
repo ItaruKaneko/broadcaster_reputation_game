@@ -1,31 +1,23 @@
-// copygame04_04
-// 2019/11/21
-// 概要 概要 スペースの2D化(表示は3D 影付き)
-// pirates は y>=150で活動。かつ creator はy方向の移動は少ないとする
-// broadcaster_agentのクラスの定義
-// 初期化
-// gb 長さ90000の配列
-//   30 x 30 の配列
-//   use count を使用することに 1 増加する
-//   5 回に達したら消去
-// copygame02_01 ルール
-// エージェントは2タイプ
-//  type 1 creator
-//    ep 初期値 = 4
-//    1%の確率で行う。
-//    エネルギーが 2 以上なら自分をauthorとして記録する
-//    エネルギーは 1 減らす
-//  type 2 consumer
-//   Author が登録されている場合
-//     author のエネルギーを +1 増加する
-//     ジャンプする
-//   マークされていない場合
-//     自由運する
-//  type 3 pirates
-//     もしst=1ならインデックスを自分に書き換える
-//     エネルギーは減らさない
-//  game cell は 10 x 10 のエリア、30 x 30 マス
-// 
+// broadcaster_reputation_game.js
+//   agent simulation of reputation of broadcaster
+// without broadcast
+//   nipa news item propagatio agent
+//   nipa.si  satisfactory index
+//     increase by satisfaction, decrease by unsatisfaction
+//   nipa.fi  faulty index
+//     increase by delivery of false information
+//   nipa action
+//     propagate information for satisfactory communication
+//   nipa_binding_matrix
+//     binding of two nipa, increased by satisfactory communication
+// with broadcast
+//   broadcast_preference_factor factor to prefer broadcast
+//   nipa.ty  broadcaster or individual
+//   nipa.vi  verifiability index
+//      broadcaster's ability to detect false information
+//   
+
+
 
 // class definition : game_cell
 // ゲームのます目の定義
@@ -59,13 +51,7 @@ game_cell.prototype.show=function(){
     } else{
       c1.fillStyle = 'rgb(128,255,255)'; // 水色
     }
-//    c1.rect(x1*10,350-y1*10, 5,5);
-    c1.moveTo(x1*10+y1*10,350-y1*10);
-    c1.lineTo(x1*10+y1*10+5,350-y1*10);
-    c1.lineTo(x1*10+y1*10+10,350-y1*10-5);
-    c1.lineTo(x1*10+y1*10+5,350-y1*10-5);
-    c1.lineTo(x1*10+y1*10,350-y1*10);
-    c1.closePath();
+    c1.rect(x1*10,350-y1*10, 5,5);
     c1.fill();
 }
 
@@ -93,8 +79,6 @@ function broadcaster_agent(aid1,gb1,ty1) {
   this.x = Math.random() * 270 + 10;
   this.y = Math.random() * 270 + 10;
   this.z = 0;
-  this.vx = 1;
-  this.vy = 1;
   //if (ty1==1) { // author is in same raw 
   //  this.vy=0;
   //}
@@ -132,12 +116,6 @@ broadcaster_agent.prototype.move = function() {
     this.vz -= 1;
   }
   // motion
-  this.x += this.vx;
-  this.y += this.vy;
-  if (this.x <0) this.x=0;
-  if (this.x>=300) this.x=299;
-  if (this.y <0) this.y=0;
-  if (this.y>=300) this.y=299;
   this.z += this.vz;
   // collision with ground
   if (this.z<0) {

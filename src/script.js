@@ -1,12 +1,26 @@
 // プログラム全体で使用する変数
 var c1;        // ゲームボード描画コンテキスト
 var c2;        // グラフ描画コンテキスト
-var broadcaster_agents;     // 全 broadcaster_agent を格納する配列
-var number_of_broadcaster_agents; // broadcaster_agent の数
+var nipa_array;     // 全 broadcaster_agent を格納する配列
+var number_of_nipa_array; // broadcaster_agent の数
 var number_of_creators; // broadcaster_agent の数
 var number_of_pirates; // pirates の数
 var gb;        // game bord, sixze 600
 var tick_count1;      // tick count 1
+
+var mpa; // messasge propagation agent
+
+
+// x axis
+// y axis
+// spi stimulation preference index  0.0..1.0
+// cpi creditability preference index 0.0..1.0
+// rsi reputation score index
+// epi excitement score index
+// fal following agent list
+
+
+
 
 
 
@@ -19,11 +33,11 @@ function plot_status(){
   ncnt=0; // 全体の生きているエージェントの数
   aena=0; // 著作者のエネルギー
   var n;
-  for (n = 0; n < number_of_broadcaster_agents; n++) {
-    esum=esum + broadcaster_agents[n].ep;
-    if (broadcaster_agents[n].ep > 0 && broadcaster_agents[n].type==1) {
+  for (n = 0; n < number_of_nipa_array; n++) {
+    esum=esum + nipa_array[n].ep;
+    if (nipa_array[n].ep > 0 && nipa_array[n].type==1) {
       ncnt=ncnt + 1;
-      aena=aena + broadcaster_agents[n].ep;
+      aena=aena + nipa_array[n].ep;
     }
   }
   c2.beginPath();
@@ -92,22 +106,22 @@ function init_simulation(){
     }
   }
   // broadcaster_agent数の設定
-  number_of_broadcaster_agents = 50;
+  number_of_nipa_array = 50;
   number_of_pirates = 20;
   number_of_creators = 10;
 
   // 全broadcaster_agentを格納する配列の準備
-  broadcaster_agents = new Array(number_of_broadcaster_agents);  
+  nipa_array = new Array(number_of_nipa_array);  
   // 全broadcaster_agentの初期化
-  for (var n = 0; n < number_of_broadcaster_agents; n++) {
+  for (var n = 0; n < number_of_nipa_array; n++) {
     if(n < number_of_creators) {
-    broadcaster_agents[n]=new broadcaster_agent(n,gb,1);
+    nipa_array[n]=new broadcaster_agent(n,gb,1);
     }
     else if (n < number_of_creators + number_of_pirates ) {
-      broadcaster_agents[n]=new broadcaster_agent(n,gb,3);
+      nipa_array[n]=new broadcaster_agent(n,gb,3);
     }
     else {
-      broadcaster_agents[n]=new broadcaster_agent(n,gb,2);
+      nipa_array[n]=new broadcaster_agent(n,gb,2);
     }
   }
 
@@ -126,16 +140,16 @@ function tick1() {
     gb[n].show();
   }
   // copygame agents を動かす
-  for (n = 0; n < number_of_broadcaster_agents; n++) {
+  for (n = 0; n < number_of_nipa_array; n++) {
     // broadcaster_agent を移動し、描画する
-    broadcaster_agents[n].progress();
-    broadcaster_agents[n].move();
-    broadcaster_agents[n].show();
+    nipa_array[n].progress();
+    nipa_array[n].move();
+    nipa_array[n].show();
   }
   if (tick_count1 > 500) {
     init_simulation()
   }
-  plot_status();
+//  plot_status();
 }
 
 // canvas 初期化
