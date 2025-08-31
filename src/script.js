@@ -1,10 +1,9 @@
 // プログラム全体で使用する変数
 var c1;        // ゲームボード描画コンテキスト
 var c2;        // グラフ描画コンテキスト
-var nipa_array;     // 全 broadcaster_agent を格納する配列
-var number_of_nipa_array; // broadcaster_agent の数
-var number_of_creators; // broadcaster_agent の数
-var number_of_pirates; // pirates の数
+var nip_array;     // 全 nipa を格納する配列
+var number_of_nip_array; // nipa の数
+var number_of_broadcasters; // broadcasters の数
 var gb;        // game bord, sixze 600
 var tick_count1;      // tick count 1
 
@@ -33,11 +32,11 @@ function plot_status(){
   ncnt=0; // 全体の生きているエージェントの数
   aena=0; // 著作者のエネルギー
   var n;
-  for (n = 0; n < number_of_nipa_array; n++) {
-    esum=esum + nipa_array[n].ep;
-    if (nipa_array[n].ep > 0 && nipa_array[n].type==1) {
+  for (n = 0; n < number_of_nip_array; n++) {
+    esum=esum + nip_array[n].ep;
+    if (nip_array[n].ep > 0 && nip_array[n].type==1) {
       ncnt=ncnt + 1;
-      aena=aena + nipa_array[n].ep;
+      aena=aena + nip_array[n].ep;
     }
   }
   c2.beginPath();
@@ -105,29 +104,25 @@ function init_simulation(){
       n1++;
     }
   }
-  // broadcaster_agent数の設定
-  number_of_nipa_array = 50;
-  number_of_pirates = 20;
-  number_of_creators = 10;
+  // nipa数の設定
+  number_of_nip_array = 50;
+  number_of_broadcasters = 20;
 
-  // 全broadcaster_agentを格納する配列の準備
-  nipa_array = new Array(number_of_nipa_array);  
-  // 全broadcaster_agentの初期化
-  for (var n = 0; n < number_of_nipa_array; n++) {
-    if(n < number_of_creators) {
-    nipa_array[n]=new broadcaster_agent(n,gb,1);
-    }
-    else if (n < number_of_creators + number_of_pirates ) {
-      nipa_array[n]=new broadcaster_agent(n,gb,3);
+  // 全nipaを格納する配列の準備
+  nip_array = new Array(number_of_nip_array);  
+  // 全nipaの初期化
+  for (var n = 0; n < number_of_nip_array; n++) {
+    if(n < number_of_broadcasters) {
+    nip_array[n]=new nipa(n,gb,1);
     }
     else {
-      nipa_array[n]=new broadcaster_agent(n,gb,2);
+      nip_array[n]=new nipa(n,gb,2);
     }
   }
 
 }
 
-// broadcaster_agent クラスを使ったアニメーションの本体
+// nipa クラスを使ったアニメーションの本体
 // 毎秒 30 回実行する関数
 function tick1() {
   tick_count1=tick_count1+1;
@@ -140,11 +135,11 @@ function tick1() {
     gb[n].show();
   }
   // copygame agents を動かす
-  for (n = 0; n < number_of_nipa_array; n++) {
-    // broadcaster_agent を移動し、描画する
-    nipa_array[n].progress();
-    nipa_array[n].move();
-    nipa_array[n].show();
+  for (n = 0; n < number_of_nip_array; n++) {
+    // nipa を移動し、描画する
+    nip_array[n].progress();
+    nip_array[n].move();
+    nip_array[n].show();
   }
   if (tick_count1 > 500) {
     init_simulation()
