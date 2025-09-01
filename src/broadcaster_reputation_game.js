@@ -18,25 +18,34 @@
 //   
 
 
-// spi stimulation preference index  0.0..1.0
+// epi stimulation preference index  0.0..1.0
 // cpi creditability preference index 0.0..1.0
-// rsi reputation score index
-// epi excitement score index
-// fal following agent list
+// ers exitement reputation score
+// crs creditability reputation
+// ffl forward follower list
 
 var nipm = Array.from({ length: 100 }, () => ({
-  ipi: null,
-  cpi: null,
-  rsi: null,
   epi: null,
-  fal: null
+  cpi: null,
+  ers: null,
+  crs: null,
+  ffl: null 
 }));
 
-nipm_initialize=function() {
+function nipm_initialize() {
   var i;
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i <nipm.length; i++) {
+    nipm[i].epi = Math.random();
+    nipm[i].cpi = Math.random();
+    nipm[i].ers = 0.0;
+    nipm[i].crs = 0.0;
+    nipm[i].ffl = new Array(10);
   }
 }
+
+// function nipm_exite(id, 
+
+// nipm_exite(Math.radom()*nipm.length, Math.random*(), Math.random());
 
 // class definition : game_cell
 // ゲームのます目の定義

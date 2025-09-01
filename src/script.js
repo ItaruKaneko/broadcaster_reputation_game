@@ -7,6 +7,7 @@ var number_of_broadcasters; // broadcasters の数
 var gb;        // game bord, sixze 600
 var tick_count1;      // tick count 1
 
+  number_of_broadcasters = 20;
 
 
 
