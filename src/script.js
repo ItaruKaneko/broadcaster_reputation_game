@@ -155,7 +155,7 @@ function draw_canvas() {
   // }
 
   // c2.clearRect(0, 0, 600, 600);
-  init_simulation()
+  init_simulation();
   // tick1 を毎秒 30 回実行するための設定
   // plot_axis();
   setInterval(tick1, 100);

@@ -30,8 +30,11 @@ var nipm = Array.from({ length: 100 }, () => ({
   ers: null,   // excitement reputation score
   crs: null,   // creditabitilty reputaiton score
   ffn: null,   // forward follower number
-  ffl: null    // forward follower list
+  ffl: null,   // forward follower list
+  rmk: null    // mark
 }));
+
+var p_thresh = 1.0;  // propagaete threshold
 
 function nipm_initialize() {
   var i;
@@ -42,6 +45,7 @@ function nipm_initialize() {
     nipm[i].crs = 0.0;
     nipm[i].ffn = 0;
     nipm[i].ffl = new Array(10);
+    nipm[i].rmk = 0;
   }
 }
 
@@ -53,6 +57,14 @@ function nipm_exite(){
 }
 
 function ni_p(nipm_no, ef, cf){
+  // nipm_no  :  nipm number
+  // ef : excitement factor
+  // cf : creditability factor
+  var nipm_nx = Math.floor(Math.random() * nipm.length);
+  var propagate_factor = ef*epi + cf * cpi;
+  if  (propagate_factor > p_thresh) {
+
+  }
 
 }
 
