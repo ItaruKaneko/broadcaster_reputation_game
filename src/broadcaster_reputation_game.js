@@ -25,11 +25,12 @@
 // ffl forward follower list
 
 var nipm = Array.from({ length: 100 }, () => ({
-  epi: null,
-  cpi: null,
-  ers: null,
-  crs: null,
-  ffl: null 
+  epi: null,   // excitement preference index
+  cpi: null,   // creditability preference index
+  ers: null,   // excitement reputation score
+  crs: null,   // creditabitilty reputaiton score
+  ffn: null,   // forward follower number
+  ffl: null    // forward follower list
 }));
 
 function nipm_initialize() {
@@ -39,13 +40,21 @@ function nipm_initialize() {
     nipm[i].cpi = Math.random();
     nipm[i].ers = 0.0;
     nipm[i].crs = 0.0;
+    nipm[i].ffn = 0;
     nipm[i].ffl = new Array(10);
   }
 }
 
-// function nipm_exite(id, 
 
-// nipm_exite(Math.radom()*nipm.length, Math.random*(), Math.random());
+function nipm_exite(){
+  // news item propagation
+  ni_p(Math.radom()*nipm.length,
+   Math.random(), Math.random());
+}
+
+function ni_p(nipm_no, ef, cf){
+
+}
 
 // class definition : game_cell
 // ゲームのます目の定義
