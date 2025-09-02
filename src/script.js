@@ -1,3 +1,10 @@
+// 2025/9/2 22:30のテスト
+
+// number_of_broadcaseters = 0 で実行
+// 赤の拡散が多い、
+// number_of_broadcaseters = 20 で実行
+// 緑のフォロワーが増え、赤が抑制させる。
+
 // プログラム全体で使用する変数
 var c1;        // ゲームボード描画コンテキスト
 var c2;        // グラフ描画コンテキスト
@@ -5,7 +12,7 @@ var nip_array = new Array(100);  // 全 nipa を格納する配列
 var gb;        // game bord, sixze 600
 var tick_count1;      // tick count 1
 
-var number_of_broadcasters = 10; // nubmer of broadcasters
+var number_of_broadcasters = 20; // nubmer of broadcasters
 
 
 // 現状をplotする

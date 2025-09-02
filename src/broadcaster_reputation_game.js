@@ -35,7 +35,7 @@ var nipm = Array.from({ length: 100 }, () => ({
 }));
 
 var p_thresh = 0.2;  // propagaete threshold
-var max_followers = 10;    // maximum followers
+var max_followers = 5;    // maximum followers
 
 function nip_array_sync(nipm_no) {
   var ix1 = nipm[nipm_no].nai;
@@ -116,7 +116,9 @@ function ni_p(nipm_no, ef, cf){
   // cf : creditability factor
   var i;
   for (let i = 0; i <nipm[nipm_no].ffn; i++) {
-    ni_p(i,ef,cf);
+    var n1 = nipm[nipm_no].ffl[i];
+    draw_propagation(cf,nipm_no, n1);
+    ni_p(n1,ef,cf);
   }
   if (nipm[nipm_no].rmk >0) return;   // if marked, do nothing
   nipm[nipm_no].rmk = 1;  // mark propagater
@@ -145,7 +147,7 @@ function nipm_exite(){
   // nipm.sort((a,b) => b.ers - a.ers);
   // news item propagation
   // index lopwer possibility higher
-  var ix = Math.floor(Math.exp(-Math.random()*7)*nipm.length);
+  var ix = Math.floor(Math.exp(-Math.random()*3.0) / (1.0-Math.exp(-3.0))*nipm.length);
   ni_p(ix, Math.random(), Math.random());
 }
 
