@@ -2,17 +2,10 @@
 var c1;        // ゲームボード描画コンテキスト
 var c2;        // グラフ描画コンテキスト
 var nip_array = new Array(100);  // 全 nipa を格納する配列
-var number_of_nip_agent; // nipa の数;    
-var number_of_broadcasters; // broadcasters の数
 var gb;        // game bord, sixze 600
 var tick_count1;      // tick count 1
 
-  number_of_broadcasters = 20;
-
-
-
-
-
+var number_of_broadcasters = 10; // nubmer of broadcasters
 
 
 // 現状をplotする
@@ -24,7 +17,7 @@ function plot_status(){
   ncnt=0; // 全体の生きているエージェントの数
   aena=0; // 著作者のエネルギー
   var n;
-  for (n = 0; n < number_of_nip_agent; n++) {
+  for (n = 0; n < nip_array.length; n++) {
     esum=esum + nip_array[n].ep;
     if (nip_array[n].ep > 0 && nip_array[n].type==1) {
       ncnt=ncnt + 1;
@@ -95,16 +88,13 @@ function init_simulation(){
       n1++;
     }
   }
-  // nipa数の設定
-  number_of_nip_agent = nip_array.length;
-  number_of_broadcasters = 20;
 
   // 全nipaを格納する配列の準備
-  // nip_array = new Array(number_of_nip_agent);  
+  // nip_array = new Array(nip_array.length);  
   // 全nipaの初期化
-  for (var n = 0; n < number_of_nip_agent; n++) {
+  for (var n = 0; n < nip_array.length; n++) {
     if(n < number_of_broadcasters) {
-    nip_array[n]=new nipa(n,gb,1);
+      nip_array[n]=new nipa(n,gb,1);
     }
     else {
       nip_array[n]=new nipa(n,gb,2);
@@ -130,7 +120,7 @@ function tick1() {
   //   gb[n].show();
   // }
   // copygame agents を動かす
-  for (n = 0; n < number_of_nip_agent; n++) {
+  for (n = 0; n < nip_array.length; n++) {
     // nipa を移動し、描画する
     nip_array[n].progress();
     nip_array[n].move();

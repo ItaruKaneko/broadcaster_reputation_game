@@ -62,14 +62,18 @@ function nipm_initialize() {
 
 
 // draw propagation line
-function draw_propagation(nmx1, nmx2) {
+function draw_propagation(cf,nmx1, nmx2) {
   var ix1 = nipm[nmx1].nai;
   var ix2 = nipm[nmx2].nai;
   var x1 = Math.floor(nip_array[ix1].x);
   var y1 = Math.floor(nip_array[ix1].y);
   var x2 = Math.floor(nip_array[ix2].x);
   var y2 = Math.floor(nip_array[ix2].y);
-  c1.strokeStyle = "red";
+  if (cf < 0.5) {
+    c1.strokeStyle = "red";
+  } else {
+    c1.strokeStyle = "green";
+  }
   c1.lineWidth = 1;
   c1.beginPath();
   c1.moveTo(x1,630-y1);
@@ -89,7 +93,11 @@ function eval_propagation(nipm_no, nipm_nx){
     // nip_array[ix1].y = nipm[nipm_noo].ers * 600;
   }
   // submitter get followers
-  if (nipm[nipm_no].ers * Math.random() > 0.7) {
+  if (
+      nipm[nipm_no].ers * Math.random() > 0.7
+      && Math.random() < 0.1
+    )
+    {
     if (nipm[nipm_no].ffn < nipm[nipm_no].ffl.length){
       nipm[nipm_no].ffl[nipm[nipm_no].ffn] = nipm_nx;
       nipm[nipm_no].ffn = nipm[nipm_no].ffn + 1;
@@ -118,7 +126,7 @@ function ni_p(nipm_no, ef, cf){
   while  (propagate_factor > p_thresh) {
     var nipm_nx = Math.floor(Math.random() * nipm.length);
     eval_propagation(nipm_no, nipm_nx);
-    draw_propagation(nipm_no, nipm_nx);
+    draw_propagation(cf,nipm_no, nipm_nx);
     ni_p(nipm_nx, ef, cf);
     propagate_factor -= p_thresh;
   }
@@ -129,7 +137,7 @@ function nipm_exite(){
   // update nipm index
   var i;
   for (let i = 0; i <nipm.length; i++) {
-    nipm[i].ers = nipm[i].ers * 0.9;
+    nipm[i].ers = nipm[i].ers * 0.98;
     nipm[i].rmk = 0;
   }
 
