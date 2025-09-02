@@ -100,7 +100,7 @@ function nipm_exite(){
     nipm[i].rmk = 0;
   }
   // sort nipm by exitement score
-
+  nipm.sort((a,b) => a.ers - b.ers);
   // news item propagation
   ni_p(Math.floor(Math.random()*nipm.length),
    Math.random(), Math.random());
