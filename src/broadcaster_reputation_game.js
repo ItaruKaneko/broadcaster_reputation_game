@@ -37,6 +37,11 @@ var nipm = Array.from({ length: 100 }, () => ({
 
 var p_thresh = 0.2;  // propagaete threshold
 
+function nip_array_sync(nipm_no) {
+  var ix1 = nipm[nipm_no].nai;
+  nip_array[ix1].y = nipm[nipm_no].ers * 600;
+}
+
 function nipm_initialize() {
   var i;
   for (let i = 0; i <nipm.length; i++) {
@@ -50,7 +55,7 @@ function nipm_initialize() {
     nipm[i].nai = i;
 
     // set y axis as epi
-    nip_array[i].y = nipm[i].ers * 600;
+    nip_array_sync(i);
   }
 }
 
@@ -65,12 +70,13 @@ function draw_propagation(nmx1, nmx2) {
   var x2 = Math.floor(nip_array[ix2].x);
   var y2 = Math.floor(nip_array[ix2].y);
   c1.strokeStyle = "red";
-  c1.lineWidth = 3;
+  c1.lineWidth = 1;
   c1.beginPath();
   c1.moveTo(x1,630-y1);
   c1.lineTo(x2,630-y2);
   c1.stroke();
 }
+
 
 // evaluate propagation
 // change score
@@ -79,8 +85,8 @@ function eval_propagation(nipm_no, nipm_nx){
   if (nipm[nipm_no].ers < 0.99) {
     nipm[nipm_no].ers = nipm[nipm_no].ers + 0.1;
     var ix1 = nipm[nipm_no].nai;
-    nip_array[ix1].y = nipm[nipm_no].ers * 600;
-    nip_array[ix1].y = nipm[nipm_no].ers * 600;
+    nip_array_sync(nipm_no);
+    // nip_array[ix1].y = nipm[nipm_no].ers * 600;
   }
   // submitter get followers
   if (nipm[nipm_no].ers * Math.random() > 0.5) {
@@ -90,7 +96,7 @@ function eval_propagation(nipm_no, nipm_nx){
     }
     var ix;
     ix = nipm[nipm_no].nai;
-    nip_array[ix].ep = nipm[nipm_no].ffn;
+    nip_array[ix].ep = nipm[nipm_no].ffn* 2 + 4;
   }
 }
 
@@ -128,7 +134,7 @@ function nipm_exite(){
   }
 
   // sort nipm by exitement score
-  nipm.sort((a,b) => b.ers - a.ers);
+  // nipm.sort((a,b) => b.ers - a.ers);
   // news item propagation
   // index lopwer possibility higher
   var ix = Math.floor(Math.exp(-Math.random()*7)*nipm.length);
