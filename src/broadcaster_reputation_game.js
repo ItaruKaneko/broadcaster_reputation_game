@@ -42,12 +42,15 @@ function nipm_initialize() {
   for (let i = 0; i <nipm.length; i++) {
     nipm[i].epi = Math.random();
     nipm[i].cpi = Math.random();
-    nipm[i].ers = 0.0;
+    nipm[i].ers = Math.random();
     nipm[i].crs = 0.0;
     nipm[i].ffn = 0;
     nipm[i].ffl = new Array(10);
     nipm[i].rmk = 0;
     nipm[i].nai = i;
+
+    // set y axis as epi
+    nip_array[i].y = nipm[i].ers * 600;
   }
 }
 
@@ -69,10 +72,16 @@ function draw_propagation(nmx1, nmx2) {
   c1.stroke();
 }
 
+// evaluate propagation
 // change score
-function move_nipm(ix1,ix2){
-
+function eval_propagation(nipm_no, nipm_nx){
+  if (nipm[nipm_no].ers < 0.99) {
+    nipm[nipm_no].ers = nipm[nipm_no].ers + 0.05;
+    var ix1 = nipm[nipm_no].nai;
+    nip_array[ix1].y = nipm[nipm_no].ers * 600;
+  }
 }
+
 
 // propageate news item through nipm
 function ni_p(nipm_no, ef, cf){
@@ -86,6 +95,7 @@ function ni_p(nipm_no, ef, cf){
   var propagate_factor = ef*epi1 + cf * cpi1;   // this is evaluation expression
   while  (propagate_factor > p_thresh) {
     var nipm_nx = Math.floor(Math.random() * nipm.length);
+    eval_propagation(nipm_no, nipm_nx);
     draw_propagation(nipm_no, nipm_nx);
     ni_p(nipm_nx, ef, cf);
     propagate_factor -= p_thresh;
@@ -94,16 +104,19 @@ function ni_p(nipm_no, ef, cf){
 
 // exite the first nipm
 function nipm_exite(){
-  // clear mark
+  // update nipm index
   var i;
   for (let i = 0; i <nipm.length; i++) {
+    nipm[i].ers = nipm[i].ers * 0.9;
     nipm[i].rmk = 0;
   }
+
   // sort nipm by exitement score
-  nipm.sort((a,b) => a.ers - b.ers);
+  nipm.sort((a,b) => b.ers - a.ers);
   // news item propagation
-  ni_p(Math.floor(Math.random()*nipm.length),
-   Math.random(), Math.random());
+  // index lopwer possibility higher
+  var ix = Math.floor(Math.exp(-Math.random()*7)*nipm.length);
+  ni_p(ix, Math.random(), Math.random());
 }
 
 
