@@ -15,7 +15,6 @@
 //   msra.ty  broadcaster or individual
 //   msra.vi  verifiability index
 //      broadcaster's ability to detect false information
-//   
 
 
 // epi stimulation preference index  0.0..1.0
@@ -36,10 +35,11 @@ var nipm = Array.from({ length: 100 }, () => ({
 }));
 
 var p_thresh = 0.2;  // propagaete threshold
+var max_followers = 10;    // maximum followers
 
 function nip_array_sync(nipm_no) {
   var ix1 = nipm[nipm_no].nai;
-  nip_array[ix1].y = nipm[nipm_no].ers * 600;
+  nip_array[ix1].y = nipm[nipm_no].ers * 600;   // wrong
 }
 
 function nipm_initialize() {
@@ -50,7 +50,7 @@ function nipm_initialize() {
     nipm[i].ers = Math.random();
     nipm[i].crs = 0.0;
     nipm[i].ffn = 0;
-    nipm[i].ffl = new Array(10);
+    nipm[i].ffl = new Array(max_followers);   // max followrd
     nipm[i].rmk = 0;
     nipm[i].nai = i;
 
@@ -82,15 +82,15 @@ function draw_propagation(nmx1, nmx2) {
 // change score
 function eval_propagation(nipm_no, nipm_nx){
   // submtter get 0.05 point of ers
-  if (nipm[nipm_no].ers < 0.99) {
-    nipm[nipm_no].ers = nipm[nipm_no].ers + 0.1;
+  if (nipm[nipm_no].ers < 0.95) {
+    nipm[nipm_no].ers = nipm[nipm_no].ers * 1.05;
     var ix1 = nipm[nipm_no].nai;
     nip_array_sync(nipm_no);
-    // nip_array[ix1].y = nipm[nipm_no].ers * 600;
+    // nip_array[ix1].y = nipm[nipm_noo].ers * 600;
   }
   // submitter get followers
-  if (nipm[nipm_no].ers * Math.random() > 0.5) {
-    if (nipm[nipm_no].ffn < 10){
+  if (nipm[nipm_no].ers * Math.random() > 0.7) {
+    if (nipm[nipm_no].ffn < nipm[nipm_no].ffl.length){
       nipm[nipm_no].ffl[nipm[nipm_no].ffn] = nipm_nx;
       nipm[nipm_no].ffn = nipm[nipm_no].ffn + 1;
     }
