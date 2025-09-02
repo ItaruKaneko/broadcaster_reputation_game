@@ -88,6 +88,9 @@ function eval_propagation(nipm_no, nipm_nx){
       nipm[nipm_no].ffl[nipm[nipm_no].ffn] = nipm_nx;
       nipm[nipm_no].ffn = nipm[nipm_no].ffn + 1;
     }
+    var ix;
+    ix = nipm[nipm_no].nai;
+    nip_array[ix].ep = nipm[nipm_no].ffn;
   }
 }
 
@@ -97,6 +100,10 @@ function ni_p(nipm_no, ef, cf){
   // nipm_no  :  nipm number
   // ef : excitement factor
   // cf : creditability factor
+  var i;
+  for (let i = 0; i <nipm[nipm_no].ffn; i++) {
+    ni_p(i,ef,cf);
+  }
   if (nipm[nipm_no].rmk >0) return;   // if marked, do nothing
   nipm[nipm_no].rmk = 1;  // mark propagater
   var epi1 = nipm[nipm_no].epi;
