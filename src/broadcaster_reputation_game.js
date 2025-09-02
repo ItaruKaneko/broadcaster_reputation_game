@@ -34,7 +34,7 @@ var nipm = Array.from({ length: 100 }, () => ({
   rmk: null    // mark
 }));
 
-var p_thresh = 1.0;  // propagaete threshold
+var p_thresh = 0.2;  // propagaete threshold
 
 function nipm_initialize() {
   var i;
@@ -50,23 +50,46 @@ function nipm_initialize() {
 }
 
 
-function nipm_exite(){
-  // news item propagation
-  ni_p(Math.radom()*nipm.length,
-   Math.random(), Math.random());
+// draw propagation line
+function draw_propagation(ix1, ix2) {
+  var x1 = Math.floor(nip_array[ix1].x);
+  var y1 = Math.floor(nip_array[ix1].y);
+  var x2 = Math.floor(nip_array[ix2].x);
+  var y2 = Math.floor(nip_array[ix2].y);
+  c1.strokeStyle = "red";
+  c1.lineWidth = 3;
+  c1.beginPath();
+  c1.moveTo(x1,630-y1);
+  c1.lineTo(x2,630-y2);
+  c1.stroke();
 }
 
+// propageate news item through nipm
 function ni_p(nipm_no, ef, cf){
   // nipm_no  :  nipm number
   // ef : excitement factor
   // cf : creditability factor
-  var nipm_nx = Math.floor(Math.random() * nipm.length);
-  var propagate_factor = ef*epi + cf * cpi;
-  if  (propagate_factor > p_thresh) {
-
+  if (nipm[nipm_no].rmk >0) return;   // if marked, do nothing
+  nipm[nipm_no].rmk = 1;  // mark propagater
+  var epi1 = nipm[nipm_no].epi;
+  var cpi1 = nipm[nipm_no].cpi;
+  var propagate_factor = ef*epi1 + cf * cpi1;   // this is evaluation expression
+  while  (propagate_factor > p_thresh) {
+    var nipm_nx = Math.floor(Math.random() * nipm.length);
+    draw_propagation(nipm_no, nipm_nx);
+    ni_p(nipm_nx, ef, cf);
+    propagate_factor -= p_thresh;
   }
-
 }
+
+// exite the first nipm
+function nipm_exite(){
+  // news item propagation
+  ni_p(Math.floor(Math.random()*nipm.length),
+   Math.random(), Math.random());
+}
+
+
 
 // class definition : game_cell
 // ゲームのます目の定義

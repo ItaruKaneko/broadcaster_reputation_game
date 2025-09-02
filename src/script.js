@@ -1,7 +1,7 @@
 // プログラム全体で使用する変数
 var c1;        // ゲームボード描画コンテキスト
 var c2;        // グラフ描画コンテキスト
-var nip_array = new Array(50);  // 全 nipa を格納する配列
+var nip_array = new Array(100);  // 全 nipa を格納する配列
 var number_of_nip_agent; // nipa の数;    
 var number_of_broadcasters; // broadcasters の数
 var gb;        // game bord, sixze 600
@@ -111,6 +111,8 @@ function init_simulation(){
     }
   }
 
+  nipm_initialize();
+
 }
 
 // one tick, information propagation
@@ -134,6 +136,9 @@ function tick1() {
     nip_array[n].move();
     nip_array[n].show();
   }
+  // propagate を一個おj子なうo
+  nipm_exite();
+
   if (tick_count1 > 500) {
     init_simulation()
   }
