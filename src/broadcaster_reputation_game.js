@@ -75,10 +75,19 @@ function draw_propagation(nmx1, nmx2) {
 // evaluate propagation
 // change score
 function eval_propagation(nipm_no, nipm_nx){
+  // submtter get 0.05 point of ers
   if (nipm[nipm_no].ers < 0.99) {
-    nipm[nipm_no].ers = nipm[nipm_no].ers + 0.05;
+    nipm[nipm_no].ers = nipm[nipm_no].ers + 0.1;
     var ix1 = nipm[nipm_no].nai;
     nip_array[ix1].y = nipm[nipm_no].ers * 600;
+    nip_array[ix1].y = nipm[nipm_no].ers * 600;
+  }
+  // submitter get followers
+  if (nipm[nipm_no].ers * Math.random() > 0.5) {
+    if (nipm[nipm_no].ffn < 10){
+      nipm[nipm_no].ffl[nipm[nipm_no].ffn] = nipm_nx;
+      nipm[nipm_no].ffn = nipm[nipm_no].ffn + 1;
+    }
   }
 }
 
