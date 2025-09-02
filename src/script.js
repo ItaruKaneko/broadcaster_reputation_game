@@ -122,7 +122,7 @@ function init_simulation(){
 function tick1() {
   tick_count1=tick_count1+1;
   // 描画領域をいったんクリアする
-  c1.clearRect(0, 0, 600, 630);
+  c1.clearRect(0, 0, 630, 630);
 
   // gb - game_cell を描画する
   // var n;

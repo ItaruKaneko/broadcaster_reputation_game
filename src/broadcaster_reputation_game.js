@@ -31,7 +31,8 @@ var nipm = Array.from({ length: 100 }, () => ({
   crs: null,   // creditabitilty reputaiton score
   ffn: null,   // forward follower number
   ffl: null,   // forward follower list
-  rmk: null    // mark
+  rmk: null,    // mark
+  nai: null    // nip_array index
 }));
 
 var p_thresh = 0.2;  // propagaete threshold
@@ -46,13 +47,16 @@ function nipm_initialize() {
     nipm[i].ffn = 0;
     nipm[i].ffl = new Array(10);
     nipm[i].rmk = 0;
+    nipm[i].nai = i;
   }
 }
 
 
 
 // draw propagation line
-function draw_propagation(ix1, ix2) {
+function draw_propagation(nmx1, nmx2) {
+  var ix1 = nipm[nmx1].nai;
+  var ix2 = nipm[nmx2].nai;
   var x1 = Math.floor(nip_array[ix1].x);
   var y1 = Math.floor(nip_array[ix1].y);
   var x2 = Math.floor(nip_array[ix2].x);
@@ -95,6 +99,8 @@ function nipm_exite(){
   for (let i = 0; i <nipm.length; i++) {
     nipm[i].rmk = 0;
   }
+  // sort nipm by exitement score
+
   // news item propagation
   ni_p(Math.floor(Math.random()*nipm.length),
    Math.random(), Math.random());
