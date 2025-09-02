@@ -122,13 +122,13 @@ function init_simulation(){
 function tick1() {
   tick_count1=tick_count1+1;
   // 描画領域をいったんクリアする
-  c1.clearRect(0, 0, 600, 600);
+  c1.clearRect(0, 0, 600, 630);
 
   // gb - game_cell を描画する
-  var n;
-  for (n = 0; n < 900; n++){
-    gb[n].show();
-  }
+  // var n;
+  // for (n = 0; n < 900; n++){
+  //   gb[n].show();
+  // }
   // copygame agents を動かす
   for (n = 0; n < number_of_nip_agent; n++) {
     // nipa を移動し、描画する

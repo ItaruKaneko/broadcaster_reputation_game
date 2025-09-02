@@ -50,6 +50,7 @@ function nipm_initialize() {
 }
 
 
+
 // draw propagation line
 function draw_propagation(ix1, ix2) {
   var x1 = Math.floor(nip_array[ix1].x);
@@ -62,6 +63,11 @@ function draw_propagation(ix1, ix2) {
   c1.moveTo(x1,630-y1);
   c1.lineTo(x2,630-y2);
   c1.stroke();
+}
+
+// change score
+function move_nipm(ix1,ix2){
+
 }
 
 // propageate news item through nipm
@@ -84,6 +90,11 @@ function ni_p(nipm_no, ef, cf){
 
 // exite the first nipm
 function nipm_exite(){
+  // clear mark
+  var i;
+  for (let i = 0; i <nipm.length; i++) {
+    nipm[i].rmk = 0;
+  }
   // news item propagation
   ni_p(Math.floor(Math.random()*nipm.length),
    Math.random(), Math.random());
