@@ -16,6 +16,9 @@
 //   msra.vi  verifiability index
 //      broadcaster's ability to detect false information
 
+// note
+// nip_array[n].type  (broadcaster or individual)
+
 
 // epi stimulation preference index  0.0..1.0
 // cpi creditability preference index 0.0..1.0
@@ -115,13 +118,20 @@ function ni_p(nipm_no, ef, cf){
   // ef : excitement factor
   // cf : creditability factor
   var i;
+  if (nipm[nipm_no].rmk >0) return;   // if marked, do nothing
+  nipm[nipm_no].rmk = 1;  // mark propagater
+  // if broadcaster, do some check and stop propagation
+  var id1 = nipm[nipm_no].nai;  // nip array index
+  if (nip_array[id1].type == 1
+      && cf < 0.3) {
+        return;
+      }
+
   for (let i = 0; i <nipm[nipm_no].ffn; i++) {
     var n1 = nipm[nipm_no].ffl[i];
     draw_propagation(cf,nipm_no, n1);
     ni_p(n1,ef,cf);
   }
-  if (nipm[nipm_no].rmk >0) return;   // if marked, do nothing
-  nipm[nipm_no].rmk = 1;  // mark propagater
   var epi1 = nipm[nipm_no].epi;
   var cpi1 = nipm[nipm_no].cpi;
   var propagate_factor = ef*epi1 + cf * cpi1;   // this is evaluation expression
